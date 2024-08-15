@@ -15,6 +15,7 @@ import com.alura.concord.database.entities.MessageEntity
 import com.alura.concord.database.entities.toDownloadableFile
 import com.alura.concord.database.entities.toMessageFile
 import com.alura.concord.navigation.messageChatIdArgument
+import com.alura.concord.network.DowloadService.makeDowloadByUrl
 import com.alura.concord.util.getFormattedCurrentDate
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -218,7 +219,22 @@ class MessageListViewModel @Inject constructor(
                 messages = updatedMessages,
                 fileInDownload = fileInDownload
             )
+            makeDowload(fileInDownload)
+        }
+    }
 
+    private fun makeDowload(fileInDownload: FileInDownload) {
+        viewModelScope.launch {
+            makeDowloadByUrl(
+                url = fileInDownload.url,
+                onFinisheDowload = { inputStream ->
+                    _uiState.value = _uiState.value.copy(
+                        fileInDownload = fileInDownload.copy(
+                            inputStream = inputStream
+                        )
+                    )
+                }
+            )
         }
     }
 
