@@ -80,7 +80,7 @@ fun NavGraphBuilder.messageListScreen(
                 },
                 onContentDownload = { message ->
 
-                    val urlTeste = ""
+                    val urlTeste = "https://github.com/alura-cursos/jetpack-compose-armazenamento-arquivos-android/raw/arquivos/images/tiramisu.png"
                     rememberCoroutineScope.launch {
                         makeDowloadByUrl(urlTeste, context)
                     }
