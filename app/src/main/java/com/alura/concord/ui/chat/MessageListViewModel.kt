@@ -233,6 +233,8 @@ class MessageListViewModel @Inject constructor(
                             inputStream = inputStream
                         )
                     )
+                }, onFailureDowload = {
+                    failureDownload(fileInDownload.messageId  )
                 }
             )
         }

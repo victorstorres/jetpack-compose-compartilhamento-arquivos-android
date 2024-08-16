@@ -23,13 +23,11 @@ import com.alura.concord.media.openWith
 import com.alura.concord.media.persistUriPermission
 import com.alura.concord.media.saveOnInternalStorage
 import com.alura.concord.media.verifyPermission
-import com.alura.concord.network.DowloadService.makeDowloadByUrl
 import com.alura.concord.ui.chat.MessageListViewModel
 import com.alura.concord.ui.chat.MessageScreen
 import com.alura.concord.ui.components.ModalBottomSheetFile
 import com.alura.concord.ui.components.ModalBottomShareSheet
 import com.alura.concord.ui.components.ModalBottomSheetSticker
-import kotlinx.coroutines.launch
 
 internal const val messageChatRoute = "messages"
 internal const val messageChatIdArgument = "chatId"
@@ -69,6 +67,9 @@ fun NavGraphBuilder.messageListScreen(
                                     messageId = fileInDownload.messageId,
                                     contentPath = filePath
                                 )
+                            },
+                            onFailure = {
+                                viewModelMessage.failureDownload(messageId = fileInDownload.messageId)
                             }
                         )
                     }
